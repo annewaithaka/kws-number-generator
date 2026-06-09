@@ -135,3 +135,18 @@ def export_numbers():
         mimetype="text/csv",
         headers={"Content-Disposition": "attachment; filename=kws_numbers.csv"},
     )
+
+
+@numbers_bp.patch("/<int:assignment_id>")
+@jwt_required()
+def update_note(assignment_id):
+    """Edit only the note on a record. Number, user, and date are permanent."""
+    assignment = db.session.get(Assignment, assignment_id)
+    if assignment is None:
+        return jsonify(error="Record not found."), 404
+
+    data = request.get_json(silent=True) or {}
+    # Empty/blank note clears it back to nothing.
+    assignment.note = (data.get("note") or "").strip() or None
+    db.session.commit()
+    return jsonify(assignment_to_dict(assignment)), 200

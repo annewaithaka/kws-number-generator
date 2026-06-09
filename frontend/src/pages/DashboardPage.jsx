@@ -1,8 +1,40 @@
 //frontend\src\pages\DashboardPage.jsx
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
+import { listUsers } from "../api/users";
+import GeneratePanel from "../components/GeneratePanel";
+import UsersPanel from "../components/UsersPanel";
+import RecordsTable from "../components/RecordsTable";
+
+const TABS = [
+  { id: "generate", label: "Generate" },
+  { id: "users", label: "Users" },
+  { id: "records", label: "Records" },
+];
 
 export default function DashboardPage() {
   const { username, logout } = useAuth();
+  const [users, setUsers] = useState([]);
+  const [recordsRefresh, setRecordsRefresh] = useState(0);
+  const [activeTab, setActiveTab] = useState("generate");
+
+  const loadUsers = useCallback(async () => {
+    try {
+      const data = await listUsers();
+      setUsers(data);
+    } catch {
+      /* 401 handled by interceptor */
+    }
+  }, []);
+
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
+
+  function handleAssigned() {
+    loadUsers();                      // refresh per-user counts
+    setRecordsRefresh((k) => k + 1);  // reload records when you open that tab
+  }
 
   return (
     <div className="app-shell">
@@ -19,14 +51,34 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      <main className="app-main">
-        <div className="placeholder-card">
-          <h2>You're signed in.</h2>
-          <p>
-            The dashboard — managing users, generating numbers, and the records
-            table with search and export — gets built in the next step.
-          </p>
-        </div>
+      <nav className="tab-nav">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            className={"tab" + (activeTab === t.id ? " active" : "")}
+            onClick={() => setActiveTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
+
+      <main className="tab-content">
+        {activeTab === "generate" && (
+          <div className="view-narrow">
+            <GeneratePanel users={users} onAssigned={handleAssigned} />
+          </div>
+        )}
+        {activeTab === "users" && (
+          <div className="view-medium">
+            <UsersPanel users={users} onChanged={loadUsers} />
+          </div>
+        )}
+        {activeTab === "records" && (
+          <div className="view-wide">
+            <RecordsTable users={users} refreshKey={recordsRefresh} />
+          </div>
+        )}
       </main>
     </div>
   );
