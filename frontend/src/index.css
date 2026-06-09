@@ -210,3 +210,10 @@ body {
   border: 1px solid var(--kws-green); border-radius: 6px;
   box-shadow: 0 0 0 3px var(--kws-green-soft); outline: none;
 }
+
+/* ---------- Account / change password ---------- */
+.account-form { display: flex; flex-direction: column; gap: 14px; }
+.inline-success {
+  margin-top: 10px; background: var(--kws-green-soft); color: var(--kws-green-dark);
+  border: 1px solid #cfe3d6; border-radius: 8px; padding: 8px 11px; font-size: 13px;
+}

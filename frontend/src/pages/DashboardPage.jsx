@@ -5,11 +5,13 @@ import { listUsers } from "../api/users";
 import GeneratePanel from "../components/GeneratePanel";
 import UsersPanel from "../components/UsersPanel";
 import RecordsTable from "../components/RecordsTable";
+import ChangePasswordPanel from "../components/ChangePasswordPanel";
 
 const TABS = [
   { id: "generate", label: "Generate" },
   { id: "users", label: "Users" },
   { id: "records", label: "Records" },
+  { id: "account", label: "Account" },
 ];
 
 export default function DashboardPage() {
@@ -32,8 +34,8 @@ export default function DashboardPage() {
   }, [loadUsers]);
 
   function handleAssigned() {
-    loadUsers();                      // refresh per-user counts
-    setRecordsRefresh((k) => k + 1);  // reload records when you open that tab
+    loadUsers();
+    setRecordsRefresh((k) => k + 1);
   }
 
   return (
@@ -77,6 +79,11 @@ export default function DashboardPage() {
         {activeTab === "records" && (
           <div className="view-wide">
             <RecordsTable users={users} refreshKey={recordsRefresh} />
+          </div>
+        )}
+        {activeTab === "account" && (
+          <div className="view-narrow">
+            <ChangePasswordPanel />
           </div>
         )}
       </main>
