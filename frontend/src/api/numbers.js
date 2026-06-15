@@ -25,7 +25,7 @@ export async function downloadNumbersCsv(params) {
   );
   const a = document.createElement("a");
   a.href = url;
-  a.download = "kws_numbers.csv";
+  a.download = "nmk_numbers.csv";
   document.body.appendChild(a);
   a.click();
   a.remove();

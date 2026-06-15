@@ -6,6 +6,7 @@ import GeneratePanel from "../components/GeneratePanel";
 import UsersPanel from "../components/UsersPanel";
 import RecordsTable from "../components/RecordsTable";
 import ChangePasswordPanel from "../components/ChangePasswordPanel";
+import nmkMark from "../assets/nmk-mark.png";
 
 const TABS = [
   { id: "generate", label: "Generate" },
@@ -42,7 +43,7 @@ export default function DashboardPage() {
     <div className="app-shell">
       <header className="app-header">
         <div className="app-header-brand">
-          <span className="app-mark">KWS</span>
+          <img className="app-logo" src={nmkMark} alt="National Museums of Kenya" />
           <span className="app-header-title">Number Allocation</span>
         </div>
         <div className="app-header-actions">

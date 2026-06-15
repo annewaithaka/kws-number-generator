@@ -28,6 +28,6 @@ def create_app(config_class=Config):
     # Simple health check.
     @app.get("/api/health")
     def health():
-        return jsonify(status="ok", message="KWS Numbers API is running")
+        return jsonify(status="ok", message="NMK Numbers API is running")
 
     return app

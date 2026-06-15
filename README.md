@@ -1,6 +1,6 @@
-# KWS Number Allocation System
+# NMK Number Allocation System
 
-A small internal admin tool for the Kenya Wildlife Service. One administrator
+An internal admin tool for the **National Museums of Kenya**. One administrator
 signs in, manages up to nine staff users, generates unique 5-digit record
 numbers, assigns each to a user with an optional note, and searches, filters,
 sorts, and exports the resulting records.
@@ -16,7 +16,7 @@ enforced both by the generator and by a database constraint.
 ## Project structure
 
 ```
-kws-number-generator/
+nmk-number-allocation/
 ├── backend/
 │   ├── run.py              # starts the API server
 │   ├── seed.py             # creates the first admin
@@ -31,6 +31,7 @@ kws-number-generator/
 │       └── routes/         # auth, users, numbers blueprints
 └── frontend/
     └── src/
+        ├── assets/         # NMK logo + emblem mark
         ├── api/            # client + per-resource API calls
         ├── context/        # AuthContext (login state)
         ├── components/     # GeneratePanel, UsersPanel, RecordsTable, etc.
@@ -73,7 +74,7 @@ python run.py
 ```
 
 The API runs at **http://localhost:5000**. The SQLite database is created
-automatically at `backend/instance/kws_numbers.db`.
+automatically at `backend/instance/`.
 
 ## Frontend setup
 
@@ -110,3 +111,4 @@ password any time from the **Account** tab.
 - For production, run the backend behind a real WSGI server (e.g. gunicorn or
   waitress) rather than the Flask development server, and build the frontend
   with `npm run build`.
+

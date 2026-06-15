@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import nmkLogo from "../assets/nmk-logo.png";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -32,9 +33,9 @@ export default function LoginPage() {
     <div className="login-screen">
       <form className="login-card" onSubmit={handleSubmit}>
         <div className="login-brand">
-          <span className="login-mark">KWS</span>
+          <img className="login-logo" src={nmkLogo} alt="National Museums of Kenya" />
           <h1 className="login-title">Number Allocation</h1>
-          <p className="login-subtitle">Kenya Wildlife Service · Admin</p>
+          <p className="login-subtitle">Admin sign-in</p>
         </div>
 
         {error && (
